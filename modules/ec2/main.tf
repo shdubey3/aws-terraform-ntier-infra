@@ -109,14 +109,14 @@ locals {
               DB_USER=$(aws ssm get-parameter --name "$DB_USER_PARAM" --query "Parameter.Value" --output text --with-decryption)
               DB_PASS=$(aws ssm get-parameter --name "$DB_PASS_PARAM" --query "Parameter.Value" --output text --with-decryption)
 
-              cat <<'HTML' > /var/www/html/index.html
+              cat <<HTML > /var/www/html/index.html
               <html>
               <head><title>App Server</title></head>
               <body>
               <h1>App Server is running</h1>
-              <p>DB endpoint: ${DB_ENDPOINT}</p>
-              <p>DB port: ${DB_PORT}</p>
-              <p>DB name: ${DB_NAME}</p>
+              <p>DB endpoint: $${DB_ENDPOINT}</p>
+              <p>DB port: $${DB_PORT}</p>
+              <p>DB name: $${DB_NAME}</p>
               </body>
               </html>
               HTML
@@ -163,4 +163,3 @@ data "aws_ami" "amazon_linux" {
 output "instance_ids" {
   value = [for i in aws_instance.app : i.id]
 }
-
