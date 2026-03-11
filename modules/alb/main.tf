@@ -68,10 +68,10 @@ resource "aws_lb_listener" "http" {
 }
 
 resource "aws_lb_target_group_attachment" "app" {
-  for_each = toset(var.target_instance_ids)
+  count = length(var.target_instance_ids)
 
   target_group_arn = aws_lb_target_group.app.arn
-  target_id        = each.value
+  target_id        = var.target_instance_ids[count.index]
   port             = 80
 }
 
