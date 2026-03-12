@@ -46,7 +46,7 @@ resource "aws_db_instance" "this" {
   identifier = "${var.name_prefix}-db"
 
   engine               = "mariadb"
-  engine_version       = "10.6.10"
+  engine_version       = "10.6.25"
   instance_class       = "db.t3.micro"
   allocated_storage    = 20
   db_name              = var.db_name
