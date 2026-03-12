@@ -50,6 +50,6 @@ variable "db_name" {
 variable "instance_type" {
   description = "EC2 instance type for app servers"
   type        = string
-  default     = "t2.micro"
+  default     = "t3.micro"
 }
 
