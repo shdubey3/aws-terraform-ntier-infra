@@ -84,7 +84,7 @@ resource "aws_eip" "nat" {
 
 resource "aws_nat_gateway" "this" {
   allocation_id = aws_eip.nat.id
-  subnet_id     = aws_subnet.public["0"].id
+  subnet_id     = aws_subnet.app["0"].id  # Fix: Move NAT to private subnet
 
   tags = {
     Name        = "${var.name_prefix}-nat-gw"
@@ -136,6 +136,11 @@ resource "aws_route_table_association" "app" {
 
 resource "aws_route_table" "db" {
   vpc_id = var.vpc_id
+
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.this.id  # Fix: Add NAT route for DB subnet
+  }
 
   tags = {
     Name        = "${var.name_prefix}-db-rt"
